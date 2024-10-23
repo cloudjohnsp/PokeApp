@@ -1,27 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
-import { axiosApi } from '../../http/config/axios';
+import { UserContext } from '../../Contexts/UserContext';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const { signIn } = useContext(UserContext);
+  const { email, password } = loginData;
 
-  const signIn = async () => {
-    const loginEndpoint: string = `auth/login`;
-    const { email, password } = loginData;
-    await axiosApi
-      .post(loginEndpoint, {
-        email,
-        password,
-      })
-      .then(({ data }) => {
-        console.log(data.token);
-        document.cookie = data.token;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
   return (
     <div>
       <form>
@@ -40,7 +26,7 @@ const Login = () => {
             setLoginData({ ...loginData, password: value })
           }
         />
-        <Button btnText='Sign In' btnOnClick={signIn} />
+        <Button btnText='Sign In' btnOnClick={() => signIn(email, password)} />
       </form>
     </div>
   );
