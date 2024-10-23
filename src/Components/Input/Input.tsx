@@ -20,17 +20,15 @@ const Input = ({
   onChangeInputHandler,
 }: TInput) => {
   return (
-    <div>
-      <input
-        id={idInput}
-        className={classNameInput}
-        name={nameInput}
-        value={valueInput}
-        type={typeInput ?? 'text'}
-        placeholder={placeholderInput}
-        onChange={onChangeInputHandler}
-      />
-    </div>
+    <input
+      id={idInput}
+      className={classNameInput}
+      name={nameInput}
+      value={valueInput}
+      type={typeInput ?? 'text'}
+      placeholder={placeholderInput}
+      onChange={onChangeInputHandler}
+    />
   );
 };
 
