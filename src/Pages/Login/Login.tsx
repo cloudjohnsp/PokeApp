@@ -1,8 +1,10 @@
+import './Login.css';
+import logo from '../../assets/pokeapp.png';
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { AuthContext } from '../../Contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -16,9 +18,11 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <form>
+    <div className='login'>
+      <img src={logo} alt='pokeapp logo' />
+      <form className='login-form'>
         <Input
+          classNameInput='login-form-input'
           valueInput={loginData.email}
           placeholderInput='email'
           onChangeInputHandler={({ target: { value } }) =>
@@ -26,6 +30,7 @@ const Login = () => {
           }
         />
         <Input
+          classNameInput='login-form-input'
           valueInput={loginData.password}
           placeholderInput='password'
           typeInput='password'
@@ -33,10 +38,17 @@ const Login = () => {
             setLoginData({ ...loginData, password: value })
           }
         />
-        <Button
-          btnText='Sign In'
-          btnOnClick={() => loginAndRedirect(email, password)}
-        />
+        <div className='login-form-button-container'>
+          <Button
+            btnClassName='login-form-button-container-button'
+            btnText='Sign In'
+            btnOnClick={() => loginAndRedirect(email, password)}
+          />
+          <Button
+            btnClassName='login-form-button-container-button'
+            btnText='Sign Up'
+          />
+        </div>
       </form>
     </div>
   );
