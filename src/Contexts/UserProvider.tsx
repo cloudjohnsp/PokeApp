@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { UserContext } from './UserContext';
+import { AuthContext } from './AuthContext';
 import { TUser } from '../types/types';
 import { axiosApi } from '../http/config/axios';
 
@@ -10,9 +10,12 @@ type ContextProviderProps = {
 const UserProvider = ({ children }: ContextProviderProps) => {
   const [userData, setUserData] = useState<TUser>();
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (
+    email: string,
+    password: string
+  ): Promise<string | never> => {
     const loginEndpoint: string = `auth/login`;
-    await axiosApi
+    const userId: string = await axiosApi
       .post(loginEndpoint, {
         email,
         password,
@@ -21,10 +24,13 @@ const UserProvider = ({ children }: ContextProviderProps) => {
         setUserData(user);
         console.log(user);
         document.cookie = token;
+        return user.id;
       })
       .catch((error) => {
         console.error(error);
       });
+
+    return userId;
   };
 
   const context = {
@@ -34,7 +40,7 @@ const UserProvider = ({ children }: ContextProviderProps) => {
   };
 
   return (
-    <UserContext.Provider value={context}>{children}</UserContext.Provider>
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
   );
 };
 

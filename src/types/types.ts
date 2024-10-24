@@ -8,8 +8,8 @@ export type TUser = {
   lastUpdatedAt: Date;
 };
 
-export type TUserContext = {
+export type TAuthContext = {
   userData: TUser | undefined;
   setUserData: Dispatch<SetStateAction<TUser | undefined>>;
-  signIn(email: string, password: string): Promise<void>;
+  signIn(email: string, password: string): Promise<string | never>;
 };

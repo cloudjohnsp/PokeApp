@@ -1,12 +1,19 @@
 import { useContext, useState } from 'react';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
-import { UserContext } from '../../Contexts/UserContext';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const { signIn } = useContext(UserContext);
+  const { signIn } = useContext(AuthContext);
   const { email, password } = loginData;
+  const navigate = useNavigate();
+
+  const loginAndRedirect = async (email: string, password: string) => {
+    const userId = await signIn(email, password);
+    navigate(`/v1/poke-app/main/user/${userId}`);
+  };
 
   return (
     <div>
@@ -26,7 +33,10 @@ const Login = () => {
             setLoginData({ ...loginData, password: value })
           }
         />
-        <Button btnText='Sign In' btnOnClick={() => signIn(email, password)} />
+        <Button
+          btnText='Sign In'
+          btnOnClick={() => loginAndRedirect(email, password)}
+        />
       </form>
     </div>
   );

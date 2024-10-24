@@ -1,8 +1,7 @@
-import { ReactNode } from 'react';
 import './App.css';
 
-function App({ children }: Readonly<{ children: ReactNode }>) {
-  return <>{children}</>;
+function App() {
+  return <div>Hello</div>;
 }
 
 export default App;
