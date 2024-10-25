@@ -14,7 +14,8 @@ const Login = () => {
 
   const loginAndRedirect = async (email: string, password: string) => {
     const userId = await signIn(email, password);
-    navigate(`/v1/poke-app/main/user/${userId}`);
+    navigate(`/v1/poke-app/main/${userId}`);
+    setLoginData({ email: '', password: '' });
   };
 
   return (
@@ -46,7 +47,7 @@ const Login = () => {
           />
           <Button
             btnClassName='login-form-button-container-button'
-            btnText='Sign Up'
+            btnText='Create Account'
           />
         </div>
       </form>
