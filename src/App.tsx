@@ -1,5 +1,16 @@
+import PokemonList from './Components/PokemonList/PokemonList';
+import FilterMenu from './Components/Filter/FilterMenu';
+import PokemonProvider from './Contexts/PokemonProvider';
+
 function App() {
-  return <div className='text-blue-500'>Hello</div>;
+  return (
+    <>
+      <PokemonProvider>
+        <FilterMenu />
+        <PokemonList />
+      </PokemonProvider>
+    </>
+  );
 }
 
 export default App;

@@ -8,7 +8,7 @@ const usePokemon = () => {
     `https://pokeapi.co/api/v2/pokemon/${id}`;
 
   useEffect(() => {
-    const fetchPokemon = async () => {
+    const fetchPokemon = async (): Promise<void> => {
       const fetchedData: TPokemonData[] = [];
 
       for (let i = 1; i < 152; i += 1) {
