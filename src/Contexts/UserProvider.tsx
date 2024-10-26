@@ -1,13 +1,9 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { TUser } from '../types/types';
+import { TAuthContext, TContextProviderProps, TUser } from '../types/types';
 import { axiosApi } from '../http/config/axios';
 
-type ContextProviderProps = {
-  children: ReactNode;
-};
-
-const UserProvider = ({ children }: ContextProviderProps) => {
+const UserProvider = ({ children }: TContextProviderProps) => {
   const [userData, setUserData] = useState<TUser>();
 
   const signIn = async (
@@ -33,7 +29,7 @@ const UserProvider = ({ children }: ContextProviderProps) => {
     return userId;
   };
 
-  const context = {
+  const context: TAuthContext = {
     userData,
     setUserData,
     signIn,
