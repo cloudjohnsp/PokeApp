@@ -5,50 +5,6 @@
   font-family: Arial, sans-serif;
 }
 
-.pokemon-filter-name {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.pokemon-filter-types {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.pokemon-filter-item {
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  text-transform: capitalize;
-  color: #fff;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.pokemon-filter-item.active {
-  transform: scale(1.1);
-  background-color: #333;
-}
-
-.pokemon-filter-reset {
-  align-self: flex-end;
-  padding: 8px 16px;
-  background-color: #e63946;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.pokemon-filter-reset:hover {
-  background-color: #d62828;
-}
-
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -105,68 +61,8 @@
   font-size: 12px;
   color: #fff;
   text-transform: capitalize;
-}
-
-.normal {
-  background-color: #a8a878;
-}
-.fire {
-  background-color: #f08030;
-}
-.water {
-  background-color: #6890f0;
-}
-.electric {
-  background-color: #f8d030;
-}
-.grass {
-  background-color: #78c850;
-}
-.ice {
-  background-color: #98d8d8;
-}
-.fighting {
-  background-color: #c03028;
-}
-.poison {
-  background-color: #a040a0;
-}
-.ground {
-  background: rgb(247, 222, 63);
-  background: linear-gradient(
-    180deg,
-    rgba(247, 222, 63, 1) 50%,
-    rgba(171, 152, 66, 1) 50%
-  );
-  color: black;
-}
-.flying {
-  background: rgb(189, 185, 184);
-  background: linear-gradient(
-    180deg,
-    rgba(63, 199, 239, 1) 50%,
-    rgba(189, 185, 184, 1) 50%
-  );
-  color: black;
-}
-.psychic {
-  background-color: #f85888;
-}
-.bug {
-  background-color: #a8b820;
-}
-.rock {
-  background-color: #b8a038;
-}
-.ghost {
-  background-color: #705898;
-}
-.dragon {
-  background: rgb(83, 164, 207);
-  background: linear-gradient(
-    180deg,
-    rgba(83, 164, 207, 1) 50%,
-    rgba(241, 110, 87, 1) 50%
-  );
-  color: white;
+  min-width: 60px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
 }
