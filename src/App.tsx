@@ -1,12 +1,31 @@
 import PokemonList from './Components/PokemonList/PokemonList';
 import FilterMenu from './Components/Filter/FilterMenu';
 import PokemonProvider from './Contexts/PokemonProvider';
+import Header from './Components/Header/Header';
+import { useState } from 'react';
+import Button from './Components/Button/Button';
 
 function App() {
+  const [showFilters, setShowFilters] = useState(false);
+
+  const toggleFilters = () => {
+    setShowFilters((prevShowFilters) => !prevShowFilters);
+  };
+
   return (
     <>
       <PokemonProvider>
-        <FilterMenu />
+        <Header />
+        <Button
+          btnOnClick={toggleFilters}
+          btnClassName='toggle-filter-button'
+          btnText={showFilters ? 'Hide Filters' : 'Show Filters'}
+        />
+        <div
+          className={`filter-menu-container ${showFilters ? 'show' : 'hide'}`}
+        >
+          <FilterMenu />
+        </div>
         <PokemonList />
       </PokemonProvider>
     </>
