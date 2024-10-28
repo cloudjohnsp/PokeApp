@@ -23,7 +23,7 @@ const Login = () => {
       navigate(`/v1/poke-app/${userData?.id}`);
       setLoginData({ email: '', password: '' });
     } else {
-      toast.error('Invalid credentials', { position: 'top-right' });
+      toast.error('email or password incorrect!', { position: 'top-right' });
     }
   };
 
