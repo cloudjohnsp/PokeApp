@@ -11,7 +11,7 @@ export type TUser = {
 export type TAuthContext = {
   userData: TUser | undefined;
   setUserData: Dispatch<SetStateAction<TUser | undefined>>;
-  signIn(email: string, password: string): Promise<string | never>;
+  signIn(email: string, password: string): Promise<boolean | undefined>;
 };
 
 export type TPokemonContext = {

@@ -1,9 +1,9 @@
-import PokemonList from './Components/PokemonList/PokemonList';
-import FilterMenu from './Components/Filter/FilterMenu';
-import PokemonProvider from './Contexts/PokemonProvider';
-import Header from './Components/Header/Header';
 import { useState } from 'react';
 import Button from './Components/Button/Button';
+import Header from './Components/Header/Header';
+import FilterMenu from './Components/Filter/FilterMenu';
+import PokemonProvider from './Contexts/PokemonProvider';
+import PokemonList from './Components/PokemonList/PokemonList';
 
 function App() {
   const [showFilters, setShowFilters] = useState(false);

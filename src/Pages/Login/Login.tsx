@@ -5,17 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { AuthContext } from '../../Contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const { signIn } = useContext(AuthContext);
-  const { email, password } = loginData;
+  const { signIn, userData } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { email, password } = loginData;
 
-  const loginAndRedirect = async (email: string, password: string) => {
-    const userId = await signIn(email, password);
-    navigate(`/v1/poke-app/main/${userId}`);
-    setLoginData({ email: '', password: '' });
+  const loginAndRedirect = async (
+    email: string,
+    password: string
+  ): Promise<void> => {
+    const isAuthenticated = await signIn(email, password);
+
+    if (isAuthenticated) {
+      navigate(`/v1/poke-app/${userData?.id}`);
+      setLoginData({ email: '', password: '' });
+    } else {
+      toast.error('Invalid credentials', { position: 'top-right' });
+    }
   };
 
   return (
