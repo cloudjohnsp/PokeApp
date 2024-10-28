@@ -19,6 +19,11 @@ const Login = () => {
   ): Promise<void> => {
     const isAuthenticated = await signIn(email, password);
 
+    if (email === '' || password === '') {
+      toast.warning('email or password must not be empty!');
+      return;
+    }
+
     if (isAuthenticated) {
       navigate(`/v1/poke-app/${userData?.id}`);
       setLoginData({ email: '', password: '' });
