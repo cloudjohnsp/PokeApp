@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { axiosApi } from '../http/config/axios';
 import { TAuthContext, TContextProviderProps, TUser } from '../types/types';
-import { AxiosError } from 'axios';
 
 type TAuthResponse = {
   data: {
@@ -12,34 +11,31 @@ type TAuthResponse = {
 };
 
 const AuthProvider = ({ children }: TContextProviderProps) => {
-  const [userData, setUserData] = useState<TUser>();
+  const [userData, setUserData] = useState<TUser>({} as TUser);
 
   const signIn = async (
     email: string,
     password: string
-  ): Promise<boolean | undefined> => {
+  ): Promise<TUser | null> => {
     const loginEndpoint: string = `auth/login`;
-    try {
-      const loginRequest = await axiosApi.post(loginEndpoint, {
-        email,
-        password,
-      });
 
-      if (loginRequest.status === 200) {
-        const {
-          data: { user, token },
-        }: TAuthResponse = loginRequest;
+    const loginRequest = await axiosApi.post(loginEndpoint, {
+      email,
+      password,
+    });
 
+    if (loginRequest.status === 200) {
+      const {
+        data: { user, token },
+      }: TAuthResponse = loginRequest;
+
+      if (user) {
         setUserData(user);
-        document.cookie = token;
-        return true;
-      } else {
-        return false;
+        if (token) document.cookie = token;
+        return user;
       }
-    } catch (error) {
-      const err = error as AxiosError;
-      console.log(JSON.stringify(err.response?.data));
     }
+    return null;
   };
 
   const context: TAuthContext = {
