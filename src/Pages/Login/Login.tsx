@@ -7,11 +7,13 @@ import { baseUrl } from '../../Helpers/Router';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { AuthContext } from '../../Contexts/AuthContext';
+import RegisterModal from '../../Components/RegisterModal/RegisterModal';
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const { email, password } = loginData;
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const loginAndRedirect = async (
@@ -25,12 +27,15 @@ const Login = () => {
 
     const user = await signIn(email, password);
     if (!user) {
-      toast.error('Email or password incorrect!', { position: 'top-right' });
+      toast.error('Email or password incorrect!');
     } else {
       navigate(`${baseUrl}/main/${user.id}`);
       setLoginData({ email: '', password: '' });
     }
   };
+
+  const showSignUpModal = () => setShowModal(true);
+  const hideSignUpModal = () => setShowModal(false);
 
   return (
     <div className='login'>
@@ -62,10 +67,12 @@ const Login = () => {
           <Button
             btnClassName='login-form-button-container-button'
             btnText='Create Account'
-            btnOnClick={() => navigate(`${baseUrl}/register`)}
+            btnOnClick={showSignUpModal}
           />
         </div>
       </form>
+
+      {showModal && <RegisterModal onClose={hideSignUpModal} />}
     </div>
   );
 };

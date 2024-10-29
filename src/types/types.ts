@@ -11,7 +11,8 @@ export type TUser = {
 export type TAuthContext = {
   userData: TUser;
   setUserData: Dispatch<SetStateAction<TUser>>;
-  signIn(email: string, password: string): Promise<TUser | null>;
+  signUp(signUpData: TSignUpData): Promise<boolean | undefined>;
+  signIn(email: string, password: string): Promise<TUser | null | undefined>;
 };
 
 export type TPokemonContext = {
@@ -45,4 +46,10 @@ export type TDecodedToken = {
   email: string;
   iat: number;
   exp: number;
+};
+
+export type TSignUpData = {
+  nickName: string;
+  email: string;
+  password: string;
 };

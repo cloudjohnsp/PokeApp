@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './Contexts/AuthProvider';
 import ProtectedRoute from './Pages/ProtectedRoute/ProtectedRoute';
 import { baseUrl } from './Helpers/Router';
-import Register from './Pages/Register/Register';
+import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,7 +16,6 @@ createRoot(document.getElementById('root')!).render(
       <Router>
         <Routes>
           <Route path={`${baseUrl}/login`} element={<Login />} />
-          <Route path={`${baseUrl}/register`} element={<Register />} />
           <Route
             path={`${baseUrl}/main/:userId`}
             element={
@@ -28,5 +27,6 @@ createRoot(document.getElementById('root')!).render(
         </Routes>
       </Router>
     </AuthProvider>
+    <ToastContainer />
   </StrictMode>
 );
