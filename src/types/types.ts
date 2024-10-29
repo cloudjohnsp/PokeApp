@@ -9,9 +9,9 @@ export type TUser = {
 };
 
 export type TAuthContext = {
-  userData: TUser | undefined;
-  setUserData: Dispatch<SetStateAction<TUser | undefined>>;
-  signIn(email: string, password: string): Promise<boolean | undefined>;
+  userData: TUser;
+  setUserData: Dispatch<SetStateAction<TUser>>;
+  signIn(email: string, password: string): Promise<TUser | null>;
 };
 
 export type TPokemonContext = {
@@ -38,4 +38,11 @@ export type TPokemonData = {
 
 export type TContextProviderProps = {
   children: ReactNode;
+};
+
+export type TDecodedToken = {
+  _id: string;
+  email: string;
+  iat: number;
+  exp: number;
 };
