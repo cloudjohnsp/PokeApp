@@ -1,34 +1,34 @@
 import './Login.css';
+import { toast } from 'react-toastify';
 import logo from '../../assets/pokeapp.png';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../Helpers/Router';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { AuthContext } from '../../Contexts/AuthContext';
-import { toast } from 'react-toastify';
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const { signIn, userData } = useContext(AuthContext);
-  const navigate = useNavigate();
   const { email, password } = loginData;
+  const navigate = useNavigate();
 
   const loginAndRedirect = async (
     email: string,
     password: string
   ): Promise<void> => {
-    const isAuthenticated = await signIn(email, password);
-
     if (email === '' || password === '') {
-      toast.warning('email or password must not be empty!');
+      toast.warning('Email or password must not be empty!');
       return;
     }
 
-    if (isAuthenticated) {
-      navigate(`/v1/poke-app/${userData?.id}`);
-      setLoginData({ email: '', password: '' });
+    const user = await signIn(email, password);
+    if (!user) {
+      toast.error('Email or password incorrect!', { position: 'top-right' });
     } else {
-      toast.error('email or password incorrect!', { position: 'top-right' });
+      navigate(`${baseUrl}/main/${user.id}`);
+      setLoginData({ email: '', password: '' });
     }
   };
 
@@ -62,6 +62,7 @@ const Login = () => {
           <Button
             btnClassName='login-form-button-container-button'
             btnText='Create Account'
+            btnOnClick={() => navigate(`${baseUrl}/register`)}
           />
         </div>
       </form>
