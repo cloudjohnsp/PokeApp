@@ -1,17 +1,32 @@
 import './index.css';
-import 'react-toastify/dist/ReactToastify.css';
+import App from './App';
 import { StrictMode } from 'react';
+import Login from './Pages/Login/Login';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
+import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './Contexts/AuthProvider';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './http/config/router';
-import { ToastContainer } from 'react-toastify';
+import ProtectedRoute from './Pages/ProtectedRoute/ProtectedRoute';
+import { baseUrl } from './Helpers/Router';
+import Register from './Pages/Register/Register';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
-      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path={`${baseUrl}/login`} element={<Login />} />
+          <Route path={`${baseUrl}/register`} element={<Register />} />
+          <Route
+            path={`${baseUrl}/main/:userId`}
+            element={
+              <ProtectedRoute>
+                <App />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </AuthProvider>
   </StrictMode>
 );
