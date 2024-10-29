@@ -1,14 +1,13 @@
 import Input from '../Input/Input';
-import './RegisterModal.css';
+import './SignUpModal.css';
 import Button from '../Button/Button';
 import { useContext, useState } from 'react';
-import { TSignUpData } from '../../types/types';
+import { TAuthContext, TSignUpData } from '../../types/types';
 import { AuthContext } from '../../Contexts/AuthContext';
-import { validatePassword } from '../../Helpers/Forms';
-import { toast } from 'react-toastify';
+//import { isEmptyOrNull } from '../../Helpers/Forms';
 
-const RegisterModal = ({ onClose }: { onClose: () => void }) => {
-  const { signUp } = useContext(AuthContext);
+const SignUpModal = ({ onClose }: { onClose: () => void }) => {
+  const { signUp } = useContext<TAuthContext>(AuthContext);
   const [signUpData, setSignUpData] = useState<TSignUpData>({
     email: '',
     nickName: '',
@@ -18,20 +17,9 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
   const { nickName, email, password } = signUpData;
 
   const submitForm = async (): Promise<void> => {
-    const isValidPassword: boolean = await validatePassword(password);
-    if (!isValidPassword) {
-      toast.error(
-        <div>
-          Password must contain the following:
-          <br /> 1 - A lowercase letter <br /> 2 - An uppercase letter <br /> 3
-          - A number
-          <br /> 4 - A special character <br /> 5 - Between 8 and 16 characters
-        </div>
-      );
-    } else {
-      signUp(signUpData);
-      onClose();
-    }
+    await signUp(signUpData).then((created: boolean | undefined) =>
+      created ? onClose() : null
+    );
   };
 
   return (
@@ -48,7 +36,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
         </div>
         <form className='modal-form'>
           <Input
-            classNameInput='modal-form-input'
+            classNameInput={`modal-form-input`}
             valueInput={nickName}
             placeholderInput='Nickname'
             onChangeInputHandler={({ target: { value } }) =>
@@ -56,7 +44,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
             }
           />
           <Input
-            classNameInput='modal-form-input'
+            classNameInput={`modal-form-input`}
             valueInput={email}
             placeholderInput='Email'
             onChangeInputHandler={({ target: { value } }) =>
@@ -64,7 +52,7 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
             }
           />
           <Input
-            classNameInput='modal-form-input'
+            classNameInput={`modal-form-input`}
             valueInput={password}
             placeholderInput='Password'
             typeInput='password'
@@ -86,4 +74,4 @@ const RegisterModal = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-export default RegisterModal;
+export default SignUpModal;

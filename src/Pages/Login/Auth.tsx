@@ -1,4 +1,4 @@
-import './Login.css';
+import './Auth.css';
 import { toast } from 'react-toastify';
 import logo from '../../assets/pokeapp.png';
 import { useContext, useState } from 'react';
@@ -7,9 +7,9 @@ import { baseUrl } from '../../Helpers/Router';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { AuthContext } from '../../Contexts/AuthContext';
-import RegisterModal from '../../Components/RegisterModal/RegisterModal';
+import RegisterModal from '../../Components/RegisterModal/SignUpModal';
 
-const Login = () => {
+const Auth = () => {
   const { signIn } = useContext(AuthContext);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const { email, password } = loginData;
@@ -77,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Auth;

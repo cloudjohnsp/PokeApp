@@ -6,3 +6,7 @@ export const validatePassword = async (password: string): Promise<boolean> => {
   const isValidPassword: boolean = passwordRegex.test(password);
   return isValidPassword;
 };
+
+export const isEmptyOrNull = (str: string): boolean => {
+  return !str || str.trim() === '';
+};
