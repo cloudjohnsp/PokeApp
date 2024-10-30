@@ -6,20 +6,53 @@ import { TAuthContext, TSignUpData } from '../../types/types';
 import { AuthContext } from '../../Contexts/AuthContext';
 //import { isEmptyOrNull } from '../../Helpers/Forms';
 
+type TInvalidInputs = {
+  nickNameInvalid: boolean;
+  emailInvalid: boolean;
+  passwordInvalid: boolean;
+};
+
 const SignUpModal = ({ onClose }: { onClose: () => void }) => {
   const { signUp } = useContext<TAuthContext>(AuthContext);
+
   const [signUpData, setSignUpData] = useState<TSignUpData>({
     email: '',
     nickName: '',
     password: '',
   });
 
+  const [errorState, setInvalidState] = useState<TInvalidInputs>({
+    nickNameInvalid: false,
+    emailInvalid: false,
+    passwordInvalid: false,
+  });
+
   const { nickName, email, password } = signUpData;
 
   const submitForm = async (): Promise<void> => {
-    await signUp(signUpData).then((created: boolean | undefined) =>
-      created ? onClose() : null
-    );
+    const errors: TInvalidInputs = {
+      nickNameInvalid: !nickName,
+      emailInvalid: !email,
+      passwordInvalid: !password,
+    };
+
+    setInvalidState(errors);
+
+    const hasErrors = Object.values(errors).some((error) => error);
+
+    if (hasErrors) return;
+
+    const created = await signUp(signUpData);
+    if (created) onClose();
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setSignUpData({ ...signUpData, [name]: value });
+
+    if (value) {
+      setInvalidState((prev) => ({ ...prev, [`${name}Invalid`]: false }));
+    }
   };
 
   return (
@@ -36,29 +69,32 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
         </div>
         <form className='modal-form'>
           <Input
-            classNameInput={`modal-form-input`}
+            classNameInput={`modal-form-input ${
+              errorState.nickNameInvalid ? 'invalid' : ''
+            }`}
             valueInput={nickName}
             placeholderInput='Nickname'
-            onChangeInputHandler={({ target: { value } }) =>
-              setSignUpData({ ...signUpData, nickName: value })
-            }
+            nameInput='nickName'
+            onChangeInputHandler={handleInputChange}
           />
           <Input
-            classNameInput={`modal-form-input`}
+            classNameInput={`modal-form-input ${
+              errorState.emailInvalid ? 'invalid' : ''
+            }`}
             valueInput={email}
             placeholderInput='Email'
-            onChangeInputHandler={({ target: { value } }) =>
-              setSignUpData({ ...signUpData, email: value })
-            }
+            nameInput='email'
+            onChangeInputHandler={handleInputChange}
           />
           <Input
-            classNameInput={`modal-form-input`}
+            classNameInput={`modal-form-input ${
+              errorState.passwordInvalid ? 'invalid' : ''
+            }`}
             valueInput={password}
             placeholderInput='Password'
             typeInput='password'
-            onChangeInputHandler={({ target: { value } }) =>
-              setSignUpData({ ...signUpData, password: value })
-            }
+            nameInput='password'
+            onChangeInputHandler={handleInputChange}
           />
           <Button
             btnClassName='modal-form-input-button'
