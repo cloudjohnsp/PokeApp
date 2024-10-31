@@ -1,10 +1,9 @@
 import Input from '../Input/Input';
 import './SignUpModal.css';
 import Button from '../Button/Button';
-import { useContext, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { TAuthContext, TSignUpData } from '../../types/types';
 import { AuthContext } from '../../Contexts/AuthContext';
-//import { isEmptyOrNull } from '../../Helpers/Forms';
 
 type TInvalidInputs = {
   nickNameInvalid: boolean;
@@ -46,7 +45,7 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
     if (created) onClose();
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setSignUpData({ ...signUpData, [name]: value });
 
