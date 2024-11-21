@@ -1,9 +1,10 @@
 import Input from '../Input/Input';
-import './SignUpModal.css';
+import './SignUpModal.scss';
 import Button from '../Button/Button';
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, memo, useContext, useState } from 'react';
 import { TAuthContext, TSignUpData } from '../../types/types';
 import { AuthContext } from '../../Contexts/AuthContext';
+import TailSpinner from '../TailSpinner/TailSpinner';
 
 type TInvalidInputs = {
   nickNameInvalid: boolean;
@@ -11,7 +12,7 @@ type TInvalidInputs = {
   passwordInvalid: boolean;
 };
 
-const SignUpModal = ({ onClose }: { onClose: () => void }) => {
+const SignUpModal = memo(({ onClose }: { onClose: () => void }) => {
   const { signUp } = useContext<TAuthContext>(AuthContext);
 
   const [signUpData, setSignUpData] = useState<TSignUpData>({
@@ -25,6 +26,9 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
     emailInvalid: false,
     passwordInvalid: false,
   });
+
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] =
+    useState<boolean>(false);
 
   const { nickName, email, password } = signUpData;
 
@@ -41,8 +45,15 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
 
     if (hasErrors) return;
 
+    setIsSubmitButtonDisabled(true);
+
     const created = await signUp(signUpData);
-    if (created) onClose();
+    if (created) closeModal();
+  };
+
+  const closeModal = (): void => {
+    onClose();
+    setIsSubmitButtonDisabled(false);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +108,14 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
           />
           <Button
             btnClassName='modal-form-input-button'
-            btnText='Sign Up'
+            btnDisabled={isSubmitButtonDisabled}
+            children={
+              isSubmitButtonDisabled ? (
+                <TailSpinner width={20} height={20} color='#ffffff' />
+              ) : (
+                'Sign Up'
+              )
+            }
             btnOnClick={(e) => {
               e.preventDefault();
               submitForm();
@@ -107,6 +125,6 @@ const SignUpModal = ({ onClose }: { onClose: () => void }) => {
       </div>
     </div>
   );
-};
+});
 
 export default SignUpModal;

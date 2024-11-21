@@ -1,44 +1,120 @@
-import './Profile.css';
+import './Profile.scss';
 import avatar from '../../assets/user.png';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { ChangeEvent, useContext, useState } from 'react';
 import ProfileUpdateForm from '../../Components/ProfileUpdateForm/ProfileUpdateForm';
 import ProfileInfo from '../../Components/ProfileInfo/ProfileInfo';
-// import { errorHandler } from '../../http/errors';
-// import { axiosApi } from '../../http/config/axios';
+import Header from '../../Components/Header/Header';
+import { TAuthContext, TUserInfo } from '../../types/types';
+import { toast } from 'react-toastify';
+import usePersistedState from '../../Hooks/usePersistedData';
+import { userInitialValue } from '../../Helpers/Factory';
+
+type ProfileBooleanStates = {
+  isFormEnabled: boolean;
+  isSubmitting: boolean;
+  isFieldEmpty: boolean;
+  isSaveButtonDisabled: boolean;
+};
 
 const Profile = () => {
-  const { userData } = useContext(AuthContext);
-  const [editValues, setEditValues] = useState({
-    newNickName: '',
-    newEmail: '',
+  const { updateUser } = useContext<TAuthContext>(AuthContext);
+
+  const { value } = usePersistedState<TUserInfo>('user_data', userInitialValue);
+
+  const [profileData, setProfileData] = useState<{
+    email: string;
+    nickName: string;
+  }>({
+    email: value.email,
+    nickName: value.nickName,
   });
 
-  const [isFormEnabled, setIsFormEnable] = useState(false);
+  const [booleanStates, setBooleanStates] = useState<ProfileBooleanStates>({
+    isFormEnabled: false,
+    isSubmitting: false,
+    isFieldEmpty: false,
+    isSaveButtonDisabled: false,
+  });
 
-  const { nickName, email } = userData;
-  const { newNickName, newEmail } = editValues;
+  const [editValues, setEditValues] = useState<{ newNickName: string }>({
+    newNickName: '',
+  });
+
+  const { isFormEnabled, isSubmitting, isFieldEmpty, isSaveButtonDisabled } =
+    booleanStates;
+  const { newNickName } = editValues;
 
   const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setEditValues({ ...editValues, [name]: value });
   };
 
-  // const updateUser = () => {
-  //   try {
-  //   } catch (err) {
-  //     errorHandler(err)
-  //   }
-  // }
+  const onHandleCancelClick = () => {
+    setBooleanStates((prevState) => ({
+      ...prevState,
+      isFormEnabled: false,
+      isFieldEmpty: false,
+      isSubmitting: false,
+    }));
+
+    setEditValues({ ...editValues, newNickName: '' });
+  };
+
+  const onHandleSuccessfulSubmit = (nickName: string): void => {
+    setProfileData({ ...profileData, nickName });
+    setBooleanStates((prevState) => ({
+      ...prevState,
+      isSubmitting: false,
+      isFormEnabled: false,
+      isFieldEmpty: false,
+      isSaveButtonDisabled: false,
+    }));
+  };
+
+  const validateField = (): boolean => {
+    if (newNickName === '') {
+      setBooleanStates((prevState) => ({
+        ...prevState,
+        isFieldEmpty: true,
+      }));
+      toast.warning('Nickname must not be empty!');
+      return false;
+    }
+
+    return true;
+  };
+
+  const submitUpdateUser = async (): Promise<void> => {
+    const proceedSubmitting = validateField();
+    if (!proceedSubmitting) return;
+
+    setBooleanStates((prevState) => ({
+      ...prevState,
+      isSaveButtonDisabled: true,
+      isSubmitting: true,
+    }));
+
+    const updateSucessful = await updateUser(value.id, newNickName);
+
+    if (updateSucessful) {
+      onHandleSuccessfulSubmit(newNickName);
+    }
+
+    onHandleCancelClick();
+  };
 
   const showEditForm = () => {
     return (
       <ProfileUpdateForm
         newNickName={newNickName}
-        newEmail={newEmail}
+        currentNickName={profileData.nickName}
+        nickNameInputInvalid={isFieldEmpty}
+        isSubmitting={isSubmitting}
+        isBtnDisabled={isSaveButtonDisabled}
         onChangeMethod={onHandleChange}
-        saveMethod={() => console.log('save')}
-        cancelMethod={() => setIsFormEnable((prevState) => !prevState)}
+        saveMethod={submitUpdateUser}
+        cancelMethod={onHandleCancelClick}
       />
     );
   };
@@ -46,18 +122,30 @@ const Profile = () => {
   const showProfileInfo = () => {
     return (
       <ProfileInfo
-        nickName={nickName}
-        email={email}
-        onClickMethod={() => setIsFormEnable((prevState) => !prevState)}
+        nickName={profileData.nickName}
+        email={profileData.email}
+        onClickMethod={() =>
+          setBooleanStates((prevState) => ({
+            ...prevState,
+            isFormEnabled: true,
+          }))
+        }
       />
     );
   };
 
+  const showContent = () => {
+    return isFormEnabled ? showEditForm() : showProfileInfo();
+  };
+
   return (
-    <div className='profile'>
-      <img className='profile-avatar' src={avatar} alt='avatar' width={100} />
-      {isFormEnabled ? showEditForm() : showProfileInfo()}
-    </div>
+    <>
+      <Header />
+      <div className='profile'>
+        <img className='profile-avatar' src={avatar} alt='avatar' width={200} />
+        {showContent()}
+      </div>
+    </>
   );
 };
 

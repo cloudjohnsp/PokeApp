@@ -1,0 +1,44 @@
+.profile-update-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.profile-info-edit-field {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  outline: none;
+  padding: 0.5em;
+  font-size: 1.5em;
+  color: #1d2224;
+}
+
+.profile-info-edit-field:focus {
+  border: 1px solid #1ca3ec;
+}
+
+.profile-edit-form-button {
+  display: flex;
+  justify-content: center;
+  border: none;
+  padding: 1em;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  transition: all 0.5s;
+  width: 100%;
+}
+
+.profile-edit-form-button:disabled {
+  background-color: #3d94cf;
+  opacity: 0.5;
+}
+
+.profile-edit-form-button:hover {
+  background-color: #3d94cf;
+}
+
+.invalid {
+  border-color: red;
+}

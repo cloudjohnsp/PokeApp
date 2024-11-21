@@ -3,8 +3,8 @@ const pokemons = [
     id: 1,
     name: 'bulbasaur',
     types: [
-      { type: { name: 'grass', url: 'string' } },
-      { type: { name: 'poison', url: 'string' } },
+      { type: { name: 'grass', url: 'https://pokeapi.co/api/v2/type/12' } },
+      { type: { name: 'poison', url: 'https://pokeapi.co/api/v2/type/4' } },
     ],
   },
   {

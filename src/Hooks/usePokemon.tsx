@@ -27,7 +27,7 @@ const usePokemon = () => {
     fetchPokemon();
   }, []);
 
-  return [pokemonData];
+  return pokemonData;
 };
 
 export default usePokemon;

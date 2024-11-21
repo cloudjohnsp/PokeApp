@@ -1,21 +1,23 @@
-import { TailSpin } from 'react-loader-spinner';
+import { TailSpin, TailSpinProps } from 'react-loader-spinner';
 
-const TailSpinner = () => {
-  const spinnerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '120px',
-  };
+const TailSpinner = ({
+  width,
+  height,
+  color,
+  ariaLabel,
+  radius,
+  wrapperClass,
+  wrapperStyle,
+}: TailSpinProps) => {
   return (
     <TailSpin
-      height='80'
-      width='80'
-      color='#c1121f'
-      ariaLabel='tail-spin-loading'
-      radius='1'
-      wrapperStyle={spinnerStyle}
-      wrapperClass=''
+      height={height ?? '80'}
+      width={width ?? '80'}
+      color={color ?? '#c1121f'}
+      ariaLabel={ariaLabel ?? 'tail-spin-loading'}
+      radius={radius ?? '1'}
+      wrapperStyle={wrapperStyle ?? undefined}
+      wrapperClass={wrapperClass ?? ''}
     />
   );
 };

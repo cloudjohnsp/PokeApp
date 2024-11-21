@@ -1,22 +1,32 @@
-import { MouseEventHandler } from 'react';
+import { memo, MouseEventHandler, ReactNode } from 'react';
 
-type TButton = {
+type ButtonProps = {
   btnClassName?: string;
   btnType?: 'button' | 'submit' | 'reset';
   btnOnClick?: MouseEventHandler<HTMLButtonElement>;
-  btnText?: string;
+  btnDisabled?: boolean;
+  children?: ReactNode;
 };
 
-const Button = ({ btnClassName, btnType, btnOnClick, btnText }: TButton) => {
-  return (
-    <button
-      className={btnClassName}
-      type={btnType ?? 'button'}
-      onClick={btnOnClick}
-    >
-      {btnText}
-    </button>
-  );
-};
+const Button = memo(
+  ({
+    btnClassName,
+    btnType,
+    btnOnClick,
+    btnDisabled,
+    children,
+  }: ButtonProps) => {
+    return (
+      <button
+        className={btnClassName}
+        type={btnType ?? 'button'}
+        onClick={btnOnClick}
+        disabled={btnDisabled ?? false}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 export default Button;

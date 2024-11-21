@@ -1,0 +1,43 @@
+.float-menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  position: absolute;
+  width: 100px;
+  height: 60px;
+  right: 20px;
+  top: 77px;
+  border: 1px solid #cecece;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #1a1818;
+  padding: 15px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.float-menu-item {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.link-item {
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.link-item:nth-child(1) {
+  border-bottom: 1px solid #cecece;
+}
+
+.link-item:visited {
+  text-decoration: none;
+  color: #1a1818;
+}
+
+.link-item:hover {
+  color: #0056b3;
+}

@@ -1,18 +1,20 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { ReactNode } from 'react';
 
-export type TUser = {
+export type TUserInfo = {
   id: string;
   email: string;
   nickName: string;
-  createdAt: Date;
-  lastUpdatedAt: Date;
+  createdAt: Date | null;
+  lastUpdatedAt: Date | null;
 };
 
 export type TAuthContext = {
-  userData: TUser;
-  setUserData: Dispatch<SetStateAction<TUser>>;
   signUp(signUpData: TSignUpData): Promise<boolean | undefined>;
-  signIn(email: string, password: string): Promise<TUser | null | undefined>;
+  signIn(
+    email: string,
+    password: string
+  ): Promise<TUserInfo | null | undefined>;
+  updateUser(id: string, nickName: string): Promise<boolean | undefined>;
 };
 
 export type TPokemonContext = {
@@ -24,20 +26,35 @@ export type TPokemonContext = {
   filteredPokemons: TPokemonData[];
 };
 
+export type TDamageRelations = {
+  double_damage_from: TPokemonTypeItem[];
+  double_damage_to: TPokemonTypeItem[];
+  half_damage_from: TPokemonTypeItem[];
+  half_damage_to: TPokemonTypeItem[];
+  no_damage_from: TPokemonTypeItem[];
+  no_damage_to: TPokemonTypeItem[];
+};
+
+export type TTypeRelations = {
+  damage_relations: TDamageRelations;
+};
+
 export type TPokemonTypeItem = {
   name: string;
+  url: string;
 };
-export type TPokemonTypeObject = {
+
+export type TTypeArray = {
   type: TPokemonTypeItem;
 };
 
 export type TPokemonData = {
   id: number;
   name: string;
-  types: TPokemonTypeObject[];
+  types: TTypeArray[];
 };
 
-export type TContextProviderProps = {
+export type ContextProviderProps = {
   children: ReactNode;
 };
 

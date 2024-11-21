@@ -1,18 +1,13 @@
-import './FilterMenu.css';
+import './FilterMenu.scss';
 import { useContext } from 'react';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import { gen1PokemonTypes } from '../../Helpers/Pokemons';
 import { PokemonContext } from '../../Contexts/PokemonContext';
+import FilterTypes from '../FilterTypes/FilterTypes';
 
 const FilterMenu = () => {
-  const {
-    nameFilter,
-    typeFilter,
-    resetFilters,
-    handleTypeFilterChange,
-    handleNameFilterChange,
-  } = useContext(PokemonContext);
+  const { nameFilter, resetFilters, handleNameFilterChange } =
+    useContext(PokemonContext);
   return (
     <div className='pokemon-filter'>
       <Input
@@ -22,24 +17,13 @@ const FilterMenu = () => {
         onChangeInputHandler={handleNameFilterChange}
         classNameInput='pokemon-filter-name'
       />
-      <div className='pokemon-filter-types'>
-        {gen1PokemonTypes.map((type) => (
-          <div
-            key={type}
-            onClick={() => handleTypeFilterChange(type)}
-            className={`pokemon-filter-item ${type} ${
-              typeFilter === type ? 'active' : ''
-            }`}
-          >
-            {type}
-          </div>
-        ))}
-      </div>
+
+      <FilterTypes />
 
       <Button
         btnOnClick={resetFilters}
-        btnClassName='pokemon-filter-reset'
-        btnText='Reset Filters'
+        btnClassName='pokemon-filter-reset-button'
+        children='Reset Filters'
       />
     </div>
   );

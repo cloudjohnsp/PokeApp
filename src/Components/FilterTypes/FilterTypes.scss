@@ -1,0 +1,37 @@
+@mixin cursor-action {
+  transform: scale(1.1);
+  background-color: #333;
+  background: #333;
+  color: #ffffff;
+}
+
+.pokemon-filter-types {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5em;
+  max-width: 100%;
+}
+
+.pokemon-filter-type-item {
+  padding: 0.8em;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: #fff;
+  flex: 0 1 auto;
+  width: 3.12em;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.pokemon-filter-type-item.active {
+  @include cursor-action();
+}
+
+.pokemon-filter-type-item:hover {
+  @include cursor-action();
+}

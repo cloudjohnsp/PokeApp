@@ -25,3 +25,6 @@ dist-ssr
 
 # ENV
 .env
+
+#workdirs
+poke-app-ts-express.code-workspace

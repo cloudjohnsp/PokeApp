@@ -1,0 +1,33 @@
+.profile-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  width: 50%;
+  flex: 0 1 auto;
+}
+
+.profile-info-field {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  outline: none;
+  padding: 0.5em;
+  font-size: 1.5em;
+  width: 300px;
+  color: #1d2224;
+}
+
+.profile-info-edit-button {
+  border: none;
+  padding: 1em;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  width: 325px;
+  transition: all 0.5s;
+}
+
+.profile-info-edit-button:hover {
+  background-color: #3d94cf;
+}

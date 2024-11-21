@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import pokemons from '../mocks/pokemon';
 import { PokemonContext } from './PokemonContext';
 import {
-  TContextProviderProps,
+  ContextProviderProps,
   TPokemonContext,
   TPokemonData,
 } from '../types/types';
 
-const PokemonProvider = ({ children }: TContextProviderProps) => {
+const PokemonProvider = memo(({ children }: ContextProviderProps) => {
   const [nameFilter, setNameFilter] = useState<string>('');
   const [typeFilter, setTypeFilter] = useState<string>('');
-  //const [pokemonData] = usePokemon();
 
   const handleNameFilterChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -53,6 +52,6 @@ const PokemonProvider = ({ children }: TContextProviderProps) => {
       {children}
     </PokemonContext.Provider>
   );
-};
+});
 
 export default PokemonProvider;
