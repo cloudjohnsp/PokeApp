@@ -2,9 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import './FloatMenu.scss';
 import { baseUrl } from '../../Helpers/Router';
 import { useEffect, useRef, useState } from 'react';
-import { signOut } from '../../Helpers/Storage';
+import { deleteCookie, getCookie } from '../../Helpers/Storage';
 import usePersistedState from '../../Hooks/usePersistedData';
 import { userInitialValue } from '../../Helpers/Factory';
+import { toast } from 'react-toastify';
 
 const FloatMenu = () => {
   const { value } = usePersistedState('user_data', userInitialValue);
@@ -18,6 +19,15 @@ const FloatMenu = () => {
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsOpen(false);
+    }
+  };
+
+  const signOut = (): void => {
+    const cookieName = 'auth_cookie';
+    deleteCookie(cookieName);
+    if (!getCookie(cookieName)) {
+      navigate(baseUrl);
+      toast.success('You have successfully signed out!');
     }
   };
 
@@ -38,13 +48,7 @@ const FloatMenu = () => {
       >
         Profile
       </Link>
-      <div
-        className='float-menu-item link-item'
-        onClick={() => {
-          signOut();
-          navigate(baseUrl);
-        }}
-      >
+      <div className='float-menu-item link-item' onClick={() => signOut()}>
         Sign out
       </div>
     </div>

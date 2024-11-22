@@ -3,7 +3,17 @@ export const getCookie = (name: string): string | null => {
   return match ? match[2] : null;
 };
 
-export const signOut = (): void => {
-  document.cookie =
-    'auth_cookie=; Max-Age=0; path=/; domain=' + location.hostname;
+export const deleteCookie = (
+  name: string,
+  path: string = '/v1/poke-app',
+  domain: string = 'localhost'
+) => {
+  if (getCookie(name)) {
+    document.cookie =
+      name +
+      '=' +
+      (path ? ';path=' + path : '') +
+      (domain ? ';domain=' + domain : '') +
+      ';expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  }
 };
