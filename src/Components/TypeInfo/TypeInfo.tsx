@@ -2,15 +2,16 @@ import './TypeInfo.scss';
 import { useParams } from 'react-router-dom';
 import usePokemonType from '../../Hooks/usePokemonType';
 import TailSpinner from '../TailSpinner/TailSpinner';
-import { pokemonTypes } from '../../mocks/pokemonTypes';
+//import { pokemonTypes } from '../../mocks/pokemonTypes';
 import TypeTableCell from '../TypeTableCell/TypeTableCell';
+import { tailSpinCenterStyle } from '../../styles';
 
 const TypeInfo = () => {
-  //const { typeId } = useParams();
-  //const numericId = Number(typeId);
-  //const { typeData } = usePokemonType(numericId);
+  const { typeId } = useParams();
+  const numericId = Number(typeId);
+  const { typeData } = usePokemonType(numericId);
 
-  const typeData = pokemonTypes;
+  //const typeData = pokemonTypes;
 
   const {
     damage_relations: {
@@ -71,7 +72,7 @@ const TypeInfo = () => {
         </div>
       ) : (
         <div className='tail-spinner'>
-          <TailSpinner />
+          <TailSpinner wrapperStyle={tailSpinCenterStyle} />
         </div>
       )}
     </div>

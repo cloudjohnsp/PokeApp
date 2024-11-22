@@ -25,7 +25,6 @@ const usePokemonType = (typeId: number | undefined): UsePokemonHookReturn => {
     const fetchType = async (): Promise<void> => {
       try {
         const request = await axios.get(typesUrl);
-        console.log('request', request);
         const response = request.data;
         setTypeData(response);
       } catch (e) {

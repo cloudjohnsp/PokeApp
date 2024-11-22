@@ -30,6 +30,12 @@ $rock: #b8a038;
 
 $ghost: #705898;
 
+$fairy: #fbb9e9;
+
+$dark: #707070;
+
+$steel: #9eb7b8;
+
 .normal {
   background-color: $normal;
 }
@@ -87,11 +93,11 @@ $ghost: #705898;
   color: #ffffff;
 }
 .steel {
-  background-color: #9eb7b8;
+  background-color: $steel;
   color: #ffffff;
 }
 
 .dark {
-  background-color: #707070;
-  color: white;
+  background-color: $dark;
+  color: #ffffff;
 }

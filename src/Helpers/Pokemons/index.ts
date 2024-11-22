@@ -10,6 +10,7 @@ export const gen1PokemonTypes = [
   'rock',
   'bug',
   'ghost',
+  'steel',
   'fire',
   'water',
   'grass',
@@ -17,6 +18,8 @@ export const gen1PokemonTypes = [
   'psychic',
   'ice',
   'dragon',
+  'dark',
+  'fairy',
 ];
 
 export enum PokemonTypesId {
@@ -28,6 +31,7 @@ export enum PokemonTypesId {
   rock,
   bug,
   ghost,
+  steel,
   fire,
   water,
   grass,
@@ -35,4 +39,6 @@ export enum PokemonTypesId {
   psychic,
   ice,
   dragon,
+  dark,
+  fairy,
 }
