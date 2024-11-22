@@ -1,8 +1,6 @@
 import './PokemonItem.scss';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { TPokemonData } from '../../types/types';
-import HeartIconRed from '../../assets/heart-svgrepo-com-red.svg';
-import HeartIconWhite from '../../assets/heart-svgrepo-com-white.svg';
 import { PokemonTypesId, spriteUrl } from '../../Helpers/Pokemons';
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../../Helpers/Router';
@@ -12,19 +10,10 @@ type PokemonItemProps = {
 };
 
 const PokemonItem = memo(({ pokemon }: PokemonItemProps) => {
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { id, name } = pokemon;
 
   return (
     <div className='pokemon-item'>
-      <div className='pokemon-item-favorite-wrapper'>
-        <img
-          className='pokemon-item-favorite-icon'
-          src={isFavorite ? HeartIconRed : HeartIconWhite}
-          alt='favorite'
-          onClick={() => setIsFavorite((prevState) => !prevState)}
-        />
-      </div>
       <img className='pokemon-item-img' src={spriteUrl(id)} alt={name} />
       <div className='pokemon-item-data'>
         <div className='pokemon-item-data-number'>{`Nº${id}`}</div>
